@@ -1,0 +1,15 @@
+{
+    "name": "redshift-amazon-location-service-udf-example",
+    "version": "1.0.0",
+    "main": "index.js",
+    "dependencies": {
+        "@aws-sdk/client-s3": "^3.3.0",
+        "@aws-sdk/node-http-handler": "^3.3.0",
+        "@aws-sdk/types": "^3.3.0",
+        "ts-node": "^9.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^14.0.23",
+        "typescript": "^4.0.2"
+    }
+}
