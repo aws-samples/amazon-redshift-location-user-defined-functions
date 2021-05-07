@@ -6,7 +6,7 @@ This repository contain the code necessary to deploy [Amazon Redshift](https://g
 
 You can launch the code provided in this repository directly in you AWS account using the lauch button below:
 
-[![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=RedshiftALS&templateURL=https://s3.amazonaws.com/my-great-stack.json)
+[![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=RedshiftALS&templateURL=https://raw.githubusercontent.com/fbdo/redshift-location-udf/master/cloudformation/create-lambda.yaml)
 
 This CloudFormation temaplate uses a Custom Resource to copy lambdas from a central repository and install it in your account as described [here](https://aws.amazon.com/blogs/infrastructure-and-automation/deploying-aws-lambda-functions-using-aws-cloudformation-the-portable-way/). The template has the following parameters:
 
