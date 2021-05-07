@@ -7,7 +7,7 @@ Parameters:
     Type: String
   OriginKeyPrefix:
     AllowedPattern: ^[0-9a-zA-Z-/]*$
-    Default: 
+    Default: resources/
     Type: String
   PlaceIndex:
     AllowedPattern: ^[0-9a-zA-Z-._]*$
@@ -141,7 +141,7 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - geo:*SearchPlaceIndexForText*
+                  - geo:SearchPlaceIndexForText
                 Resource: !Sub 'arn:aws:geo:${AWS::Region}:${AWS::AccountId}:place-index/${PlaceIndex}'
   GeocodeFunction:
     DependsOn: CopyZips
