@@ -1,0 +1,33 @@
+name: GitHub Actions Demo
+on: [push]
+jobs:
+  Publish-CloudFormation-Lambda-Launch-Bucket:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create distribution folder
+        run: mkdir -p dist/cloudformation && mkdir dist/lambdas
+      
+      - name: Move template to distribution folder
+        run: mv cloudformation/create-lambda.yaml dist/cloudformation/
+
+      - name: Zip/Move geocode lambda to distribution folder
+        uses: papeloto/action-zip@1
+        with:
+          files: geocoding_lambda/lambda_function.py
+          recursives: false
+          dest: dist/lambdas/geocoding.zip
+      
+      - name: Sync local directory with remote S3 bucket
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: 'eu-central-1'   
+          SOURCE_DIR: 'dist'
+          DEST_DIR: 'resources'
