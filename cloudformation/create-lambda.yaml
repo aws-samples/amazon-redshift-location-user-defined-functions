@@ -3,11 +3,11 @@ Description: 'Redshift UDFs for Amazon Location Service functions'
 Parameters:
   OriginBucketName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
-    Default: aws-quickstart
+    Default: redshift-udf-als-dev
     Type: String
   OriginKeyPrefix:
     AllowedPattern: ^[0-9a-zA-Z-/]*$
-    Default: redshift-udf-als/
+    Default: 
     Type: String
   PlaceIndex:
     AllowedPattern: ^[0-9a-zA-Z-._]*$
