@@ -170,7 +170,7 @@ Resources:
     Properties:
       FunctionName: RedshiftUDFGeocodeFunction
       Description: A Lambda to work as a Redshift UDF to geocode values passed as parameters
-      Handler: lambda_function.handler
+      Handler: geocoding_lambda/lambda_function.handler
       Runtime: python3.7
       Role: !GetAtt 'GeocodeFunctionRole.Arn'
       Timeout: 300
@@ -186,7 +186,7 @@ Resources:
     Properties:
       FunctionName: RedshiftUDFReverseGeocodeFunction
       Description: A Lambda to work as a Redshift UDF to reverse geocode values passed as parameters
-      Handler: lambda_function.handler
+      Handler: reverse_geocoding_lambda/lambda_function.handler
       Runtime: python3.7
       Role: !GetAtt 'ReverseGeocodeFunctionRole.Arn'
       Timeout: 300
