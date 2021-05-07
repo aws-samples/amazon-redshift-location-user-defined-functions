@@ -19,6 +19,13 @@ jobs:
           files: geocoding_lambda/lambda_function.py
           recursives: false
           dest: dist/lambdas/geocoding.zip
+
+      - name: Zip/Move reverse geocode lambda to distribution folder
+        uses: papeloto/action-zip@v1
+        with:
+          files: reverse_geocoding_lambda/lambda_function.py
+          recursives: false
+          dest: dist/lambdas/reverse_geocoding.zip
       
       - name: Sync local directory with remote S3 bucket
         uses: jakejarvis/s3-sync-action@master
