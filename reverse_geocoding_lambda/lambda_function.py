@@ -27,7 +27,7 @@ def lambda_handler(event, context):
         log.error('Error: {}'.format(e))
         return {
             "success": false,
-            "error_msg": e
+            "error_msg": str(e)
             "num_records": 0,
             "results": []
         }
