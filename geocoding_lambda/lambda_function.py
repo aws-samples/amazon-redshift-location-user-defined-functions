@@ -4,6 +4,7 @@ import os
 
 import boto3
 
+PLACE_INDEX = os.environmen['PLACE_INDEX']
 
 def lambda_handler(event, context):
     # load the side-loaded Amazon Location Service model; needed during Public Preview

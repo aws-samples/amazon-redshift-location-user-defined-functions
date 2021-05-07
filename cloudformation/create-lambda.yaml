@@ -155,3 +155,6 @@ Resources:
       Code:
         S3Bucket: !Ref 'LambdaZipsBucket'
         S3Key: !Sub '${OriginKeyPrefix}lambdas/geocoding.zip'
+      Environment:
+        Variables:
+          PLACE_INDEX: !Ref 'PlaceIndex'
