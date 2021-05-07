@@ -168,6 +168,7 @@ Resources:
     DependsOn: CopyZips
     Type: AWS::Lambda::Function
     Properties:
+      FunctionName: RedshiftUDFGeocodeFunction
       Description: A Lambda to work as a Redshift UDF to geocode values passed as parameters
       Handler: lambda_function.handler
       Runtime: python3.7
@@ -183,6 +184,7 @@ Resources:
     DependsOn: CopyZips
     Type: AWS::Lambda::Function
     Properties:
+      FunctionName: RedshiftUDFReverseGeocodeFunction
       Description: A Lambda to work as a Redshift UDF to reverse geocode values passed as parameters
       Handler: lambda_function.handler
       Runtime: python3.7
