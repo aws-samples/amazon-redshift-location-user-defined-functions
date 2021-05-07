@@ -17,13 +17,21 @@ def lambda_handler(event, context):
 
     try:
         for arg in arguments:
-            # populate the response list in the same orders as the arguments list
+            text, bias_position, filter_countries = arg
+            response = client.search_place_index_for_text(
+                Text=text,
+                IndexName=PLACE_INDEX,
+                FilterCountries=json.loads(filter_countries),
+                BiasPosition=json.loads(bias_position)
+            )
+            results.append(response)
 
         return {
             "success": true,
-            "num_records": len(response),
+            "num_records": len(results),
             "results": results
         }
+
     except ClientError as e:
         log.error('Error: {}'.format(e))
         return {
