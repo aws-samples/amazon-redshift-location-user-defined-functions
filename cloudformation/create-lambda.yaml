@@ -143,6 +143,27 @@ Resources:
                 Action:
                   - geo:SearchPlaceIndexForText
                 Resource: !Sub 'arn:aws:geo:${AWS::Region}:${AWS::AccountId}:place-index/${PlaceIndex}'
+  ReverseGeocodeFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: ReverseGeoocodingPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - geo:SearchPlaceIndexForPosition
+                Resource: !Sub 'arn:aws:geo:${AWS::Region}:${AWS::AccountId}:place-index/${PlaceIndex}'
   GeocodeFunction:
     DependsOn: CopyZips
     Type: AWS::Lambda::Function
@@ -155,6 +176,21 @@ Resources:
       Code:
         S3Bucket: !Ref 'LambdaZipsBucket'
         S3Key: !Sub '${OriginKeyPrefix}lambdas/geocoding.zip'
+      Environment:
+        Variables:
+          PLACE_INDEX: !Ref 'PlaceIndex'
+  ReverseGeocodeFunction:
+    DependsOn: CopyZips
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: A Lambda to work as a Redshift UDF to reverse geocode values passed as parameters
+      Handler: lambda_function.handler
+      Runtime: python3.7
+      Role: !GetAtt 'ReverseGeocodeFunctionRole.Arn'
+      Timeout: 300
+      Code:
+        S3Bucket: !Ref 'LambdaZipsBucket'
+        S3Key: !Sub '${OriginKeyPrefix}lambdas/reverse_geocoding.zip'
       Environment:
         Variables:
           PLACE_INDEX: !Ref 'PlaceIndex'
