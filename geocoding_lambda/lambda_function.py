@@ -35,9 +35,9 @@ def handler(event, context):
     try:
         for arg in arguments:
             text, bias_position, filter_countries = arg
-            log.info('Received search text: {}'.format(text))
-            log.info('Received bias position: {}'.format(bias_position))
-            log.info('Received filter countries: {}'.format(filter_countries))
+            log.debug('Received search text: {}'.format(text))
+            log.debug('Received bias position: {}'.format(bias_position))
+            log.debug('Received filter countries: {}'.format(filter_countries))
 
             req = {'Text': text, 'IndexName': PLACE_INDEX}
             if filter_countries and json.loads(filter_countries):
