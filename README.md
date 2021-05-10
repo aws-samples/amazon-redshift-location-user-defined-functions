@@ -18,6 +18,7 @@ This CloudFormation temaplate uses a Custom Resource to copy lambdas from a cent
 
 ## How to test
 * Create a new RedShift cluster if you don't have one already. Follow the instructions in [Getting started with Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/gsg/getting-started.html).
+* Attach the IAM roles RedshiftGeocodeFunctionRole and RedshiftReverseGeocodeFunctionPolicy created by this CloudFormation template to your cluster. You can add a role to a cluster or view the roles associated with a cluster by using the Amazon Redshift Management Console, CLI, or API. For more information, see [Associating an IAM Role With a Cluster](https://docs.aws.amazon.com/redshift/latest/mgmt/copy-unload-iam-role.html) in the Amazon Redshift Cluster Management Guide. 
 * Connect to your database
 * Open an Editor and execute the instructions in the file [create-geocoding-udf.sql](https://github.com/fbdo/redshift-location-udf/blob/master/udf/create-geocoding-udf.sql). This will give the required permissions and create public external function pointing to out lambda. Don't forget to replace the <AccountId> placeholder with your AWS account it.
 * To test the geocoding, create a new table and populate it with data as below:
