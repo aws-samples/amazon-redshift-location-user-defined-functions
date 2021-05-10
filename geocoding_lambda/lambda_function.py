@@ -8,6 +8,18 @@ import boto3
 
 PLACE_INDEX = os.environ['PLACE_INDEX']
 
+""" 
+Valid request:
+{
+  "arguments": [
+    [
+      "Englisch Garten",
+      "[48.192087, 11.617126]",
+      "[\"DEU\"]"
+    ]
+  ]
+}
+"""
 def handler(event, context):
     # load the side-loaded Amazon Location Service model; needed during Public Preview
     os.environ["AWS_DATA_PATH"] = os.environ["LAMBDA_TASK_ROOT"]
@@ -38,7 +50,7 @@ def handler(event, context):
             results.append(response)
 
         return {
-            "success": true,
+            "success": True,
             "num_records": len(results),
             "results": results
         }
@@ -46,7 +58,7 @@ def handler(event, context):
     except ClientError as e:
         log.error('Error: {}'.format(e))
         return {
-            "success": false,
+            "success": False,
             "error_msg": str(e),
             "num_records": 0,
             "results": []
