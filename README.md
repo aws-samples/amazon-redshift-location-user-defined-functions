@@ -4,6 +4,8 @@ This repository contain the code necessary to deploy [Amazon Redshift](https://g
 
 ## How to install
 
+As a pre-requisite, create a new Amazon Location Service place index if you don't have already one you use. Follow the instructions in [Create a place index resource](https://docs.aws.amazon.com/location/latest/developerguide/create-place-index-resource.html).
+
 You can launch the code provided in this repository directly in you AWS account using the lauch button below:
 
 [![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=RedshiftALS&templateURL=https://redshift-udf-als-dev.s3.eu-central-1.amazonaws.com/resources/cloudformation/create-lambda.yaml)
@@ -12,4 +14,24 @@ This CloudFormation temaplate uses a Custom Resource to copy lambdas from a cent
 
 * OriginBucketName: The S3 bucket from where you are copying the lambda functions from. Should be kept unchanged (unless you know what are you doing).
 * OriginKeyPrefix: The S3 bucket prefix that contains the lambda functions. Should be kept unchanged (unless you know what are you doing).
-* PlaceIndex: A pre-existing place index. You need to create one before applying this template, please check [how to create a place index](https://docs.aws.amazon.com/location/latest/developerguide/create-place-index-resource.html).
+* PlaceIndex: A pre-existing place index. You need to create one before applying this template.
+
+## How to test
+* Create a new RedShift cluster if you don't have one already. Follow the instructions in [Getting started with Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/gsg/getting-started.html).
+* Connect to your database
+* Open an Editor and execute the instructions in the file [create-geocoding-udf.sql](https://github.com/fbdo/redshift-location-udf/blob/master/udf/create-geocoding-udf.sql). This will give the required permissions and create public external function pointing to out lambda. Don't forget to replace the <AccountId> placeholder with your AWS account it.
+* To test the geocoding, create a new table and populate it with data as below:
+
+```sql
+create table places(address varchar (200));
+insert into places values 
+('Domagkstraße 28'),
+('Marcel-Breuer-Straße 12');
+```
+* Execute a query using the newly created lambda as in:
+
+```sql
+select address, 
+json_extract_path_text(geocode_address(address, '[48.192087, 11.617126]','["DEU"]'), 'Label') as full_address
+from places; 
+```
