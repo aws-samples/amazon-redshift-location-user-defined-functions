@@ -47,19 +47,30 @@ def handler(event, context):
                 req['BiasPosition'] = json.loads(bias_position)
 
             response = client.search_place_index_for_text(**req)
-            results.append(response)
+            log.debug('Response received from ALS client: {}'.format(response))
 
-        return {
+            if len(response["Results"]) >= 1:
+                results.append({
+                    "Longitude": response["Results"][0]["Place"]["Geometry"]["Point"][0],
+                    "Latitude": response["Results"][0]["Place"]["Geometry"]["Point"][1],
+                    "Label": response["Results"][0]["Place"]["Label"]
+                })
+            else:
+                results.append(None)
+
+        log.info('Returning results: {}'.format(results))
+
+        return json.dumps({
             "success": True,
             "num_records": len(results),
             "results": results
-        }
+        })
 
     except ClientError as e:
         log.error('Error: {}'.format(e))
-        return {
+        return json.dumps({
             "success": False,
             "error_msg": str(e),
             "num_records": 0,
             "results": []
-        }
+        })
