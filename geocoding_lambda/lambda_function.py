@@ -26,14 +26,15 @@ def handler(event, context):
             log.info('Received search text: {}'.format(text))
             log.info('Received bias position: {}'.format(bias_position))
             log.info('Received filter countries: {}'.format(filter_countries))
-            fc = json.loads(filter_countries) if not filter_countries == "" else []
-            bp = json.loads(bias_position) if not bias_position == "" else None
-            response = client.search_place_index_for_text(
-                Text=text,
-                IndexName=PLACE_INDEX,
-                FilterCountries=fc,
-                BiasPosition=bp
-            )
+
+            req = {'Text': text, 'IndexName': PLACE_INDEX}
+            if filter_countries and json.loads(filter_countries):
+                req['FilterCountries'] = json.loads(filter_countries)
+
+            if bias_position and json.loads(bias_position):
+                req['BiasPosition'] = json.loads(bias_position)
+
+            response = client.search_place_index_for_text(**req)
             results.append(response)
 
         return {
