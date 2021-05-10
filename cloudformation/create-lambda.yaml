@@ -196,3 +196,27 @@ Resources:
       Environment:
         Variables:
           PLACE_INDEX: !Ref 'PlaceIndex'
+  RedshiftGeocodeFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Policies:
+        - PolicyName: RedshiftGeocodeFunctionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:InvokeFunction
+                Resource: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:RedshiftUDFGeocodeFunction'
+  RedshiftReverseGeocodeFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Policies:
+        - PolicyName: RedshiftReverseGeocodeFunctionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:InvokeFunction
+                Resource: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:RedshiftUDFReverseGeocodeFunction'
