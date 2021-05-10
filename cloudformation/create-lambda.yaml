@@ -200,6 +200,13 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       RoleName: RedshiftGeocodeFunctionRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: redshift.amazonaws.com
+            Action: sts:AssumeRole
       Policies:
         - PolicyName: RedshiftGeocodeFunctionPolicy
           PolicyDocument:
@@ -213,6 +220,13 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       RoleName: RedshiftReverseGeocodeFunctionRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: redshift.amazonaws.com
+            Action: sts:AssumeRole
       Policies:
         - PolicyName: RedshiftReverseGeocodeFunctionPolicy
           PolicyDocument:
