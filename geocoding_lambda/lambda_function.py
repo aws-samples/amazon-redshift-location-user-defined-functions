@@ -59,11 +59,11 @@ def handler(event, context):
             log.debug('Response received from ALS client: {}'.format(response))
 
             if len(response["Results"]) >= 1:
-                results.append({
+                results.append(json.dumps({
                     "Longitude": response["Results"][0]["Place"]["Geometry"]["Point"][0],
                     "Latitude": response["Results"][0]["Place"]["Geometry"]["Point"][1],
                     "Label": response["Results"][0]["Place"]["Label"]
-                })
+                }))
             else:
                 results.append(None)
 
