@@ -1,10 +1,11 @@
 from datetime import datetime
 import json
 import os
-from botocore.exceptions import ClientError
 import logging as log
 
 import boto3
+import botocore
+from botocore.exceptions import ClientError
 
 PLACE_INDEX = os.environ['PLACE_INDEX']
 
@@ -25,7 +26,15 @@ def handler(event, context):
     os.environ["AWS_DATA_PATH"] = os.environ["LAMBDA_TASK_ROOT"]
 
     log.getLogger().setLevel(log.INFO)
-    client = boto3.client("location")
+
+    session_config = botocore.config.Config(
+        user_agent="Redshift/1.0 Amazon Location Service UDF"
+    )
+    client = boto3.client(
+        "location",
+        config=session_config
+    )
+    
     arguments = event["arguments"]
 
     log.info('Received arguments: {}'.format(arguments))
@@ -50,11 +59,11 @@ def handler(event, context):
             log.debug('Response received from ALS client: {}'.format(response))
 
             if len(response["Results"]) >= 1:
-                results.append({
+                results.append(json.dumps({
                     "Longitude": response["Results"][0]["Place"]["Geometry"]["Point"][0],
                     "Latitude": response["Results"][0]["Place"]["Geometry"]["Point"][1],
                     "Label": response["Results"][0]["Place"]["Label"]
-                })
+                }))
             else:
                 results.append(None)
 
