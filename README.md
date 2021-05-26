@@ -36,3 +36,21 @@ select address,
 json_extract_path_text(geocode_address(address, '[48.192087, 11.617126]','["DEU"]'), 'Label') as full_address
 from places; 
 ```
+
+* To test the reverse geocoding, create another table and populate it with data as below:
+
+```sql
+create table places_pos(
+  latitude decimal(18, 15),
+  longitude decimal(18,15)
+);
+insert into places_pos values (7.37951000000003, 51.38240000000007);
+```
+
+* And execute a query using the newly created lambda as in:
+
+```sql
+select latitude, longitude, 
+reverse_geocode_position(latitude, longitude)
+from places_pos; 
+```
