@@ -37,7 +37,7 @@ def handler(event, context):
 
     try:
         for arg in arguments:
-            req = {'IndexName': PLACE_INDEX, 'Position': arg}
+            req = {'IndexName': PLACE_INDEX, 'Position': [arg[1], arg[0]]}
             
             response = client.search_place_index_for_position(**req)
             results.append(json.dumps({
