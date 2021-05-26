@@ -12,7 +12,7 @@ PLACE_INDEX = os.environ['PLACE_INDEX']
 Valid request
 {
   "arguments": [
-    "[48.199323, 11.612921]"
+    [48.199323, 11.612921]
   ]
 }
 """
@@ -40,7 +40,11 @@ def handler(event, context):
             req = {'IndexName': PLACE_INDEX, 'Position': arg}
             
             response = client.search_place_index_for_position(**req)
-            results.append(response)
+            results.append(json.dumps({
+                    "Longitude": response["Results"][0]["Place"]["Geometry"]["Point"][0],
+                    "Latitude": response["Results"][0]["Place"]["Geometry"]["Point"][1],
+                    "Label": response["Results"][0]["Place"]["Label"]
+                }))
 
         return json.dumps({
             "success": True,
