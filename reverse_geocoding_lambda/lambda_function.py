@@ -37,18 +37,16 @@ def handler(event, context):
 
     try:
         for arg in arguments:
-            req = {'IndexName': PLACE_INDEX}
-            if arg and json.loads(arg):
-                req['Position'] = json.loads(arg)
+            req = {'IndexName': PLACE_INDEX, 'Position': arg}
             
             response = client.search_place_index_for_position(**req)
             results.append(response)
 
-        return {
+        return json.dumps({
             "success": True,
             "num_records": len(results),
             "results": results
-        }
+        })
     except ClientError as e:
         log.error('Error: {}'.format(e))
         return {
