@@ -1,8 +1,8 @@
 -- See documentation on https://docs.aws.amazon.com/redshift/latest/dg/udf-creating-a-lambda-sql-udf.html
 grant usage on language exfunc to PUBLIC;
 CREATE OR REPLACE EXTERNAL FUNCTION public.reverse_geocode_position(
-    decimal(20, 17), -- Latitude
-    decimal(20, 17) -- Longitude  
+    DOUBLE PRECISION, -- Latitude
+    DOUBLE PRECISION  -- Longitude  
 )
 RETURNS VARCHAR -- A JSON with the address components (Country, PostalCode, AddressNumber, Street, etc...)
 STABLE
