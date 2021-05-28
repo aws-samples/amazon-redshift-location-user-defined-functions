@@ -45,11 +45,15 @@ def handler(event, context):
             req = {'IndexName': PLACE_INDEX, 'Position': [arg[1], arg[0]]}
             
             response = client.search_place_index_for_position(**req)
-            results.append(json.dumps({
+
+            if len(response["Results"]) >= 1:
+                results.append(json.dumps({
                     "Longitude": response["Results"][0]["Place"]["Geometry"]["Point"][0],
                     "Latitude": response["Results"][0]["Place"]["Geometry"]["Point"][1],
                     "Label": response["Results"][0]["Place"]["Label"]
                 }))
+            else:
+                results.append({})
 
         return json.dumps({
             "success": True,
