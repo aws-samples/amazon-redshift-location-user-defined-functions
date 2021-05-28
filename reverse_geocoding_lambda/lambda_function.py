@@ -1,12 +1,25 @@
-from datetime import datetime
-import json
 import os
+import json
+import logging
+
 import boto3
-import botocore
+from botocore.config import Config
 from botocore.exceptions import ClientError
-import logging as log
 
 PLACE_INDEX = os.environ['PLACE_INDEX']
+
+logging.basicConfig(level=logging.INFO)
+
+client_config = Config(
+    user_agent="Redshift/1.0 Amazon Location Service UDF",
+    retries = {
+        'mode': 'standard'
+    }
+)
+client = boto3.client(
+    "location",
+    config=client_config
+)
 
 """
 Valid request
@@ -17,21 +30,13 @@ Valid request
 }
 """
 def handler(event, context):
+    logger = logging.getLogger(__name__)
     # load the side-loaded Amazon Location Service model; needed during Public Preview
     os.environ["AWS_DATA_PATH"] = os.environ["LAMBDA_TASK_ROOT"]
 
-    log.getLogger().setLevel(log.INFO)
-
-    session_config = botocore.config.Config(
-        user_agent="Redshift/1.0 Amazon Location Service UDF"
-    )
-    client = boto3.client(
-        "location",
-        config=session_config
-    )
     arguments = event["arguments"]
 
-    log.info('Received arguments: {}'.format(arguments))
+    logger.debug('Received arguments: %s.', arguments)
 
     results = []
 
@@ -52,7 +57,7 @@ def handler(event, context):
             "results": results
         })
     except ClientError as e:
-        log.error('Error: {}'.format(e))
+        logger.error('Error: %s.', e)
         return {
             "success": False,
             "error_msg": str(e),
