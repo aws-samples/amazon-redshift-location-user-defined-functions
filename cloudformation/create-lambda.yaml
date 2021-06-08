@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT-0
 
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Redshift UDFs for Amazon Location Service functions'
+Description: 'Amazon Redshift user defined functions for Amazon Location Service APIs'
 Parameters:
   OriginBucketName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
