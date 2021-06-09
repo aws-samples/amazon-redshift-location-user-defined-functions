@@ -49,8 +49,6 @@ Valid request
 """
 def handler(event, context):
     logger = logging.getLogger(__name__)
-    # load the side-loaded Amazon Location Service model; needed during Public Preview
-    os.environ["AWS_DATA_PATH"] = os.environ["LAMBDA_TASK_ROOT"]
 
     arguments = event["arguments"]
 
