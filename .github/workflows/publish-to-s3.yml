@@ -1,4 +1,4 @@
-name: Deploy Launch Button resources
+name: Publish Launch Button resources
 on:
   push:
     branches:
