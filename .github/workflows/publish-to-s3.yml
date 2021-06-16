@@ -10,6 +10,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Testing CFN
+        uses: scottbrenner/cfn-lint-action@v2
+        with:
+          command: cfn-lint -t ./cloudformation/create-lambda.yml
+
       - name: Create distribution folder
         run: mkdir -p dist/cloudformation && mkdir dist/lambdas
       
