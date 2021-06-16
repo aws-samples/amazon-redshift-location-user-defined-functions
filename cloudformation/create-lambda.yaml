@@ -21,8 +21,8 @@ Resources:
     Properties:
       BucketEncryption:
         ServerSideEncryptionConfiguration:
-          - ServerSideEncryptionByDefault:
-              SSEAlgorithm: AES256
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
   CopyZips:
     Type: Custom::CopyZips
     Properties:
