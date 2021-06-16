@@ -8,10 +8,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Testing CFN
+      - name: Testing CFN format/syntax
         uses: scottbrenner/cfn-lint-action@v2
         with:
           command: cfn-lint -t ./cloudformation/create-lambda.yaml
+
+      - name: Testing CFN for insecure infrastructure
+        uses: stelligent/cfn_nag@master
+        with:
+          input_path: ./cloudformation/create-lambda.yaml
 
       - name: Create distribution folder
         run: mkdir -p dist/cloudformation && mkdir dist/lambdas
