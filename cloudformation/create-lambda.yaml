@@ -18,6 +18,11 @@ Parameters:
 Resources:
   LambdaZipsBucket:
     Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+          SSEAlgorithm: AES256
   CopyZips:
     Type: Custom::CopyZips
     Properties:
