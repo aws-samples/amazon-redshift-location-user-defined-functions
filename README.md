@@ -2,6 +2,10 @@
 
 This repository contain the code necessary to deploy [Amazon Redshift](https://aws.amazon.com/redshift/) Lambda-based [User Defined Functions](https://docs.aws.amazon.com/redshift/latest/dg/udf-creating-a-lambda-sql-udf.html) (UDF) to allow a user to call [Amazon Location Service](https://aws.amazon.com/location/) APIs, such as geocoding and reverse geocoding, as part of SQL queries.
 
+## Architecture
+
+![Amazon Redshift User Defined Function for Amazon Location Service Architecture](docs/Architecture.png?classes=shadow)
+
 ## How to install
 
 As a pre-requisite, create a new Amazon Location Service place index if you don't have already one you use. Follow the instructions in [Create a place index resource](https://docs.aws.amazon.com/location/latest/developerguide/create-place-index-resource.html).
