@@ -25,14 +25,14 @@ jobs:
         run: mv cloudformation/create-lambda.yaml dist/cloudformation/
 
       - name: Zip/Move geocode lambda to distribution folder
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: geocoding_lambda/lambda_function.py
           recursive: false
           dest: dist/lambdas/geocoding.zip
 
       - name: Zip/Move reverse geocode lambda to distribution folder
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: reverse_geocoding_lambda/lambda_function.py
           recursive: false
